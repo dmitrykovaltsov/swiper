@@ -32,6 +32,7 @@ export default function Pagination({ swiper, extendParams, on, emit }) {
       lockClass: `${pfx}-lock`,
       horizontalClass: `${pfx}-horizontal`,
       verticalClass: `${pfx}-vertical`,
+      paginationDisabledClass: `${pfx}-disabled`,
     },
   });
 
@@ -300,7 +301,7 @@ export default function Pagination({ swiper, extendParams, on, emit }) {
     }
 
     $el.addClass(params.modifierClass + params.type);
-    $el.addClass(params.modifierClass + swiper.params.direction);
+    $el.addClass(swiper.isHorizontal() ? params.horizontalClass : params.verticalClass);
 
     if (params.type === 'bullets' && params.dynamicBullets) {
       $el.addClass(`${params.modifierClass}${params.type}-dynamic`);
@@ -338,7 +339,7 @@ export default function Pagination({ swiper, extendParams, on, emit }) {
 
     $el.removeClass(params.hiddenClass);
     $el.removeClass(params.modifierClass + params.type);
-    $el.removeClass(params.modifierClass + swiper.params.direction);
+    $el.removeClass(swiper.isHorizontal() ? params.horizontalClass : params.verticalClass);
     if (swiper.pagination.bullets && swiper.pagination.bullets.removeClass)
       swiper.pagination.bullets.removeClass(params.bulletActiveClass);
     if (params.clickable) {
@@ -347,9 +348,14 @@ export default function Pagination({ swiper, extendParams, on, emit }) {
   }
 
   on('init', () => {
-    init();
-    render();
-    update();
+    if (swiper.params.pagination.enabled === false) {
+      // eslint-disable-next-line
+      disable();
+    } else {
+      init();
+      render();
+      update();
+    }
   });
   on('activeIndexChange', () => {
     if (swiper.params.loop) {
@@ -393,6 +399,7 @@ export default function Pagination({ swiper, extendParams, on, emit }) {
     if (
       swiper.params.pagination.el &&
       swiper.params.pagination.hideOnClick &&
+      $el &&
       $el.length > 0 &&
       !$(targetEl).hasClass(swiper.params.pagination.bulletClass)
     ) {
@@ -412,7 +419,27 @@ export default function Pagination({ swiper, extendParams, on, emit }) {
     }
   });
 
+  const enable = () => {
+    swiper.$el.removeClass(swiper.params.pagination.paginationDisabledClass);
+    if (swiper.pagination.$el) {
+      swiper.pagination.$el.removeClass(swiper.params.pagination.paginationDisabledClass);
+    }
+    init();
+    render();
+    update();
+  };
+
+  const disable = () => {
+    swiper.$el.addClass(swiper.params.pagination.paginationDisabledClass);
+    if (swiper.pagination.$el) {
+      swiper.pagination.$el.addClass(swiper.params.pagination.paginationDisabledClass);
+    }
+    destroy();
+  };
+
   Object.assign(swiper.pagination, {
+    enable,
+    disable,
     render,
     update,
     init,

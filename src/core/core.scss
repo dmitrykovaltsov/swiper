@@ -1,5 +1,7 @@
-:root {
-  --swiper-theme-color: #{$themeColor};
+@at-root {
+  :root {
+    --swiper-theme-color: #{$themeColor};
+  }
 }
 .swiper {
   margin-left: auto;
@@ -55,7 +57,10 @@
     transition-property: transform, height;
   }
 }
-
+.swiper-backface-hidden .swiper-slide {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
 /* 3D Effects */
 .swiper-3d {
   &,

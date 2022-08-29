@@ -1,5 +1,14 @@
-import { h, ref, onMounted, onUpdated, onBeforeUpdate, computed, onBeforeUnmount } from 'vue';
-import { uniqueClasses } from './utils.js';
+import {
+  h,
+  ref,
+  onMounted,
+  onUpdated,
+  onBeforeUpdate,
+  computed,
+  onBeforeUnmount,
+  provide,
+} from 'vue';
+import { uniqueClasses } from '../components-shared/utils.js';
 
 const SwiperSlide = {
   name: 'SwiperSlide',
@@ -66,6 +75,7 @@ const SwiperSlide = {
         slideClasses.value.indexOf('swiper-slide-next') >= 0 ||
         slideClasses.value.indexOf('swiper-slide-duplicate-next') >= 0,
     }));
+    provide('swiperSlide', slideData);
     return () => {
       return h(
         props.tag,

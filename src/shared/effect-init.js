@@ -1,5 +1,15 @@
 export default function effectInit(params) {
-  const { effect, swiper, on, setTranslate, setTransition, overwriteParams, perspective } = params;
+  const {
+    effect,
+    swiper,
+    on,
+    setTranslate,
+    setTransition,
+    overwriteParams,
+    perspective,
+    recreateShadows,
+    getEffectParams,
+  } = params;
 
   on('beforeInit', () => {
     if (swiper.params.effect !== effect) return;
@@ -20,5 +30,37 @@ export default function effectInit(params) {
   on('setTransition', (_s, duration) => {
     if (swiper.params.effect !== effect) return;
     setTransition(duration);
+  });
+
+  on('transitionEnd', () => {
+    if (swiper.params.effect !== effect) return;
+    if (recreateShadows) {
+      if (!getEffectParams || !getEffectParams().slideShadows) return;
+      // remove shadows
+      swiper.slides.each((slideEl) => {
+        const $slideEl = swiper.$(slideEl);
+        $slideEl
+          .find(
+            '.swiper-slide-shadow-top, .swiper-slide-shadow-right, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left',
+          )
+          .remove();
+      });
+      // create new one
+      recreateShadows();
+    }
+  });
+
+  let requireUpdateOnVirtual;
+  on('virtualUpdate', () => {
+    if (swiper.params.effect !== effect) return;
+    if (!swiper.slides.length) {
+      requireUpdateOnVirtual = true;
+    }
+    requestAnimationFrame(() => {
+      if (requireUpdateOnVirtual && swiper.slides && swiper.slides.length) {
+        setTranslate();
+        requireUpdateOnVirtual = false;
+      }
+    });
   });
 }

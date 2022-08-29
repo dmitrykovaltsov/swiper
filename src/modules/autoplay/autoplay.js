@@ -24,6 +24,11 @@ export default function Autoplay({ swiper, extendParams, on, emit }) {
   });
 
   function run() {
+    if (!swiper.size) {
+      swiper.autoplay.running = false;
+      swiper.autoplay.paused = false;
+      return;
+    }
     const $activeSlideEl = swiper.slides.eq(swiper.activeIndex);
     let delay = swiper.params.autoplay.delay;
     if ($activeSlideEl.attr('data-swiper-autoplay')) {
@@ -131,6 +136,7 @@ export default function Autoplay({ swiper, extendParams, on, emit }) {
     if (swiper.params.autoplay.disableOnInteraction) {
       stop();
     } else {
+      emit('autoplayPause');
       pause();
     }
 
@@ -143,6 +149,7 @@ export default function Autoplay({ swiper, extendParams, on, emit }) {
       return;
     }
     swiper.autoplay.paused = false;
+    emit('autoplayResume');
     run();
   }
   function attachMouseEvents() {

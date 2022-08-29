@@ -23,7 +23,7 @@ import {
   FreeModeOptions,
   GridOptions,
 } from '../types';
-import { ComponentOptionsMixin, DefineComponent, PropType } from 'vue';
+import { ComponentOptionsMixin, DefineComponent, PropType, Ref } from 'vue';
 import { SwiperOptions, Swiper as SwiperClass } from '../types';
 
 declare const Swiper: DefineComponent<
@@ -113,6 +113,10 @@ declare const Swiper: DefineComponent<
     };
     slidesPerView: {
       type: PropType<SwiperOptions['slidesPerView']>;
+      default: undefined;
+    };
+    maxBackfaceHiddenSlides: {
+      type: NumberConstructor;
       default: undefined;
     };
     slidesPerGroup: {
@@ -475,4 +479,13 @@ declare const SwiperSlide: DefineComponent<{
   };
 }>;
 
-export { Swiper, SwiperSlide };
+declare const useSwiper: () => Ref<SwiperClass>;
+declare const useSwiperSlide: () => Ref<{
+  isActive: boolean;
+  isVisible: boolean;
+  isDuplicate: boolean;
+  isPrev: boolean;
+  isNext: boolean;
+}>;
+
+export { Swiper, SwiperSlide, useSwiper, useSwiperSlide };

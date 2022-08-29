@@ -1,5 +1,267 @@
 # Changelog
 
+# [8.3.2](https://github.com/nolimits4web/Swiper/compare/v8.3.1...v8.3.2) (2022-07-26)
+
+### Bug Fixes
+
+- **a11y:** fix `focus` handling ([8a3dfee](https://github.com/nolimits4web/Swiper/commit/8a3dfee2a3b26c56d6cd173094a08db8846f2fe6)), closes [#5905](https://github.com/nolimits4web/Swiper/issues/5905)
+- **autoplay:** don't run autoplay if swiper is hidden ([4f2e30f](https://github.com/nolimits4web/Swiper/commit/4f2e30f7a1607eb134d62153e9870bd6a9e26692)), closes [#5907](https://github.com/nolimits4web/Swiper/issues/5907)
+
+### Features
+
+- **core:** new loopedSlidesLimit paramter and new functionality to increase duplicated slides ([5156071](https://github.com/nolimits4web/Swiper/commit/5156071299fd7e1dc6041dcdfa7f127f7bbcf0c3))
+
+# [8.3.1](https://github.com/nolimits4web/Swiper/compare/v8.3.0...v8.3.1) (2022-07-13)
+
+### Bug Fixes
+
+- **packages:** add index.js in /solid and /react ([#5863](https://github.com/nolimits4web/Swiper/issues/5863)) ([6e94701](https://github.com/nolimits4web/Swiper/commit/6e947010f065dbaedf3fd00b936a95926d414503))
+- **solid:** fix reactivity ([502c152](https://github.com/nolimits4web/Swiper/commit/502c152270ef0f528bbb05ccc10f00668286fb67)), closes [#5862](https://github.com/nolimits4web/Swiper/issues/5862)
+- **solid:** stop using cloneNode in sliders without loops in SolidJS ([#5860](https://github.com/nolimits4web/Swiper/issues/5860)) ([d14c432](https://github.com/nolimits4web/Swiper/commit/d14c432956b0d61711ea2c7ddf5620c6fbb10578))
+
+# [8.3.0](https://github.com/nolimits4web/Swiper/compare/v8.2.6...v8.3.0) (2022-07-06)
+
+### Features
+
+- all new Swiper SolidJS components thanks to @TiagoCavalcante 🎉
+- move common helpers for React/Vue/Svelte/Solid to single files ([90e8da1](https://github.com/nolimits4web/Swiper/commit/90e8da1da94549ee827d0fd2b3cc3c0b0d9dd3a3))
+- **a11y:** allow disabling slideRole ([#5838](https://github.com/nolimits4web/Swiper/issues/5838)) ([b376aa1](https://github.com/nolimits4web/Swiper/commit/b376aa1f68b29560168cff5418715dfe3312ba39))
+
+# [8.2.6](https://github.com/nolimits4web/Swiper/compare/v8.2.5...v8.2.6) (2022-06-29)
+
+### Bug Fixes
+
+- **thumbs:** active class gets removed ([#5826](https://github.com/nolimits4web/Swiper/issues/5826)) ([3267616](https://github.com/nolimits4web/Swiper/commit/3267616d53d8e943b690a20ac327024cd3b2fff8))
+- **vue:** virtualUpdate event is not declared ([#5830](https://github.com/nolimits4web/Swiper/issues/5830)) ([8b00333](https://github.com/nolimits4web/Swiper/commit/8b003333d5684e00fc4919e6aef992ae4ae447f8))
+
+### Features
+
+- **core:** add `changeLanguageDirection` method to change it to RTL/LTR after init ([f5bb7af](https://github.com/nolimits4web/Swiper/commit/f5bb7af0e1039cc52068909159943d6302d819ba)), closes [#3279](https://github.com/nolimits4web/Swiper/issues/3279)
+- **navigation:** add `navigationPrev` and `navigationNext` events ([d0c6365](https://github.com/nolimits4web/Swiper/commit/d0c636572387e0ec94538cb00877de646a36736a)), closes [#5832](https://github.com/nolimits4web/Swiper/issues/5832)
+
+# [8.2.5](https://github.com/nolimits4web/Swiper/compare/v8.2.4...v8.2.5) (2022-06-27)
+
+### Bug Fixes
+
+- **pagination:** double check for $el ([baafb55](https://github.com/nolimits4web/Swiper/commit/baafb553213dc772821f6c06dfbaa6894a1917e5))
+
+# [8.2.4](https://github.com/nolimits4web/Swiper/compare/v8.2.3...v8.2.4) (2022-06-13)
+
+### Bug Fixes
+
+- **angular:** rollback build to Angular 13 ([3f14d67](https://github.com/nolimits4web/Swiper/commit/3f14d675b30c39085a375ac8d161576034192bd0)), closes [#5792](https://github.com/nolimits4web/Swiper/issues/5792) [#5791](https://github.com/nolimits4web/Swiper/issues/5791)
+
+# [8.2.3](https://github.com/nolimits4web/Swiper/compare/v8.2.2...v8.2.3) (2022-06-10)
+
+### Features
+
+- **a11y:** allow slideLabelMessage: null ([#5783](https://github.com/nolimits4web/Swiper/issues/5783)) ([78a8d90](https://github.com/nolimits4web/Swiper/commit/78a8d902008b31671bcc66f3a6706d3630a98b37))
+- **angular:** update to angular v14 ([097390d](https://github.com/nolimits4web/Swiper/commit/097390db6456c1d26ad45ff19fda976bd93d02fc))
+- **scrollbar:** add directional classes to scrollbar container ([083a83f](https://github.com/nolimits4web/Swiper/commit/083a83f0b80c53ce9fac5ae4f67730172f91e736))
+
+# [8.2.2](https://github.com/nolimits4web/Swiper/compare/v8.2.1...v8.2.2) (2022-06-01)
+
+### Bug Fixes
+
+- **scrollbar:** fix draggable scrollbar ([28cd6c2](https://github.com/nolimits4web/Swiper/commit/28cd6c243555f7132d7db1df899f3182e935f834)), closes [#5759](https://github.com/nolimits4web/Swiper/issues/5759)
+
+### Reverts
+
+- Revert "fix(autoplay): immediate proceed autoplay when `autoplay.delay = 0`" ([d942e83](https://github.com/nolimits4web/Swiper/commit/d942e834c58b3291425038325ab5ff009fb5d87d))
+- Revert "fix(autoplay): fix swiper getting stuck with `0` autoplay delay" ([56e050b](https://github.com/nolimits4web/Swiper/commit/56e050bcdbcc00db7af02ccb32e0725265dd242a))
+
+# [8.2.1](https://github.com/nolimits4web/Swiper/compare/v8.2.0...v8.2.1) (2022-05-31)
+
+### Bug Fixes
+
+- **core:** fix issues with navigation/pagination `enabled` prop ([af9ed85](https://github.com/nolimits4web/Swiper/commit/af9ed85d451148fd2e6af6aadc4436f1b2c2a3b5))
+
+# [8.2.0](https://github.com/nolimits4web/Swiper/compare/v8.1.6...v8.2.0) (2022-05-31)
+
+### Bug Fixes
+
+- **autoplay:** fix swiper getting stuck with `0` autoplay delay ([61db26f](https://github.com/nolimits4web/Swiper/commit/61db26fdde129afc77bb56c302790c8af6f35c44))
+- **core:** fix type Number in slideToLoop ([#5732](https://github.com/nolimits4web/Swiper/issues/5732)) ([1e1336b](https://github.com/nolimits4web/Swiper/commit/1e1336b5eabe331b212790a238d5993ca49e4abf))
+
+### Features
+
+- **navigation:** allow navigation to be enabled/disabled in breakpoints ([052f863](https://github.com/nolimits4web/Swiper/commit/052f863444a4891fa7803a43914de808038e5a06))
+- **pagination:** allow pagination to be enabled/disabled in breakpoints ([d748d49](https://github.com/nolimits4web/Swiper/commit/d748d49c86903acc39eac1c4512c2daff929c52b))
+- **scrollbar:** allow scrollbar to be enabled/disabled in breakpoints ([3f09fc7](https://github.com/nolimits4web/Swiper/commit/3f09fc7ecc13a643fc88e0d2cc434a5b7915eab7))
+
+# [8.1.6](https://github.com/nolimits4web/Swiper/compare/v8.1.5...v8.1.6) (2022-05-25)
+
+### Bug Fixes
+
+- **a11y:** update slides a11y on slides amount change ([31e2005](https://github.com/nolimits4web/Swiper/commit/31e200514392df6ebb7632a778d544edf8e43bda)), closes [#5692](https://github.com/nolimits4web/Swiper/issues/5692)
+- **autoplay:** immediate proceed autoplay when `autoplay.delay = 0` ([81a4cc8](https://github.com/nolimits4web/Swiper/commit/81a4cc83064c5e49a831afedf67251e754986c75))
+- **lazy:** `loadPrevNext` fix when `slidesPerView` is fractional ([94d4c9e](https://github.com/nolimits4web/Swiper/commit/94d4c9e66fe48f1bd88cdc4998947a7de5ad77b5)), closes [#5712](https://github.com/nolimits4web/Swiper/issues/5712)
+- **lazy:** unset lazy-loading class on swiper destroy ([81d7fc4](https://github.com/nolimits4web/Swiper/commit/81d7fc406c1c33b8d2635ed475188e105b596495)), closes [#5737](https://github.com/nolimits4web/Swiper/issues/5737)
+- **types:** add `snapIndex` and `snapGrid` props ([ee3d2dc](https://github.com/nolimits4web/Swiper/commit/ee3d2dcf717b09e7b0c622854480d82f5766c253)), closes [#5733](https://github.com/nolimits4web/Swiper/issues/5733)
+
+### Features
+
+- **navigation:** default `opacity: 0` styles for hidden navigation buttons ([85f72f4](https://github.com/nolimits4web/Swiper/commit/85f72f42711175a0f14ff49d6cf49e16715f1821))
+
+# [8.1.5](https://github.com/nolimits4web/Swiper/compare/v8.1.4...v8.1.5) (2022-05-16)
+
+### Bug Fixes
+
+- **core:** add missing types comments ([340f716](https://github.com/nolimits4web/Swiper/commit/340f716e78875ee21276bacb3625979bed17a4d5)), closes [/github.com/nolimits4web/swiper/issues/5688#issuecomment-1118316055](https://github.com//github.com/nolimits4web/swiper/issues/5688/issues/issuecomment-1118316055)
+- **core:** check for visibleSlides presence in updateAutoHeight ([3909c45](https://github.com/nolimits4web/Swiper/commit/3909c453616400803f3814ccc1deb94d94811887))
+- **core:** fix getWrapper $el check ([7702178](https://github.com/nolimits4web/Swiper/commit/77021780f8c1adf84eb5f9f62f89b0bddc74643b)), closes [#5711](https://github.com/nolimits4web/Swiper/issues/5711)
+- **navigation:** remove duplicated rules ([#5657](https://github.com/nolimits4web/Swiper/issues/5657)) ([333a3ae](https://github.com/nolimits4web/Swiper/commit/333a3ae0f827b33ce16c6c36a572e5e2b4c5d4ed))
+- **react:** move navigation, pagination, scrollbar to the end of container ([2d3255f](https://github.com/nolimits4web/Swiper/commit/2d3255fe3fdc12344fbac6b6979473258f9c66a8))
+- **svelte:** fix incorrect parameters in event dispatching ([#5716](https://github.com/nolimits4web/Swiper/issues/5716)) ([b7961a3](https://github.com/nolimits4web/Swiper/commit/b7961a34648834030d65ad04cf80eaab13685d23))
+- **svelte:** move navigation, pagination, scrollbar to the end of container ([c8a4f67](https://github.com/nolimits4web/Swiper/commit/c8a4f671ccc9dff9fc2241ada3fe3f8096a5c0de))
+- **vue:** move navigation, pagination, scrollbar to the end of container ([0d219f4](https://github.com/nolimits4web/Swiper/commit/0d219f4205807c2ddab3c37e449448366eed9b23))
+
+### Features
+
+- **history:** plugin fixes and new option adding ([#5665](https://github.com/nolimits4web/Swiper/issues/5665)) ([798c7c0](https://github.com/nolimits4web/Swiper/commit/798c7c068cbe785308e15a64dcfbb7ec4193b057))
+
+# [8.1.4](https://github.com/nolimits4web/Swiper/compare/v8.1.3...v8.1.4) (2022-04-24)
+
+### Bug Fixes
+
+- **core:** animate preloader in visible slides if watchSlidesProgress is enabled ([8174b5a](https://github.com/nolimits4web/Swiper/commit/8174b5a5fcc5078b9164ee0577387ca352fd7af9))
+- **core:** more checks for when swiper is destroyed ([de47f09](https://github.com/nolimits4web/Swiper/commit/de47f09f165653eccc682d5b4a51da705d6b6d0d)), closes [#5656](https://github.com/nolimits4web/Swiper/issues/5656) [#5635](https://github.com/nolimits4web/Swiper/issues/5635)
+- **lazy:** animate preloader in not visible slides ([865529b](https://github.com/nolimits4web/Swiper/commit/865529b0cd7d41a18e3bccf5ec511a1158c3e56f))
+
+# [8.1.3](https://github.com/nolimits4web/Swiper/compare/v8.1.2...v8.1.3) (2022-04-20)
+
+### Bug Fixes
+
+- **effects:** improve dynamic slide shadows re-creation for Cube and Flip effects ([98b8a3e](https://github.com/nolimits4web/Swiper/commit/98b8a3eddafe1b1d1456a61fcaac2cc477c6197f))
+
+# [8.1.2](https://github.com/nolimits4web/Swiper/compare/v8.1.1...v8.1.2) (2022-04-20)
+
+### Bug Fixes
+
+- **effects:** fix slide shadows flickering in Safari for Cube and Flip effects ([52f5ef7](https://github.com/nolimits4web/Swiper/commit/52f5ef75eed2f9c11950bee94a6b4060c366c7a7))
+
+### Features
+
+- **cube-effect:** set `--swiper-cube-translate-z` CSS property on swiper-wrapper ([758ad28](https://github.com/nolimits4web/Swiper/commit/758ad28fce90def8ba681219f7625a18e7fbac54))
+
+# [8.1.1](https://github.com/nolimits4web/Swiper/compare/v8.1.0...v8.1.1) (2022-04-15)
+
+### Bug Fixes
+
+- **lazy:** fix lazy preloader in iOS 15 ([794a625](https://github.com/nolimits4web/Swiper/commit/794a625804aac037a8c3d17bbdf1a59d9f074475))
+- **virtual:** fix leaked effects translate when Virtual enabled ([a0e8dd4](https://github.com/nolimits4web/Swiper/commit/a0e8dd464b478746e0023d10f7ab3fe47148e977)), closes [#5588](https://github.com/nolimits4web/Swiper/issues/5588)
+
+# [8.1.0](https://github.com/nolimits4web/Swiper/compare/v8.0.7...v8.1.0) (2022-04-08)
+
+### Bug Fixes
+
+- **pagination:** formatter functions now accept strings as return values ([#5610](https://github.com/nolimits4web/Swiper/issues/5610)) ([629c1c4](https://github.com/nolimits4web/Swiper/commit/629c1c4526f6c324a33118a22faaa8bf47c1a028))
+- **vue:** add missing event ([bda673f](https://github.com/nolimits4web/Swiper/commit/bda673f6a78b4c5cbc8f72ab3a302ef237dfecf2)), closes [#5558](https://github.com/nolimits4web/Swiper/issues/5558)
+- enabled not working (fix [#5611](https://github.com/nolimits4web/Swiper/issues/5611)) ([#5612](https://github.com/nolimits4web/Swiper/issues/5612)) ([6a0554b](https://github.com/nolimits4web/Swiper/commit/6a0554ba6f6c7ecf3715934b217797dd3a2a0f3a))
+
+### Features
+
+- **a11y:** add `id` parameter ([213c8fe](https://github.com/nolimits4web/Swiper/commit/213c8fe7cd7d5696909b19fdfa79dad600d24b3f)), closes [#5586](https://github.com/nolimits4web/Swiper/issues/5586)
+- **angular:** support `[ngClass]` in swiperSlide ([#5562](https://github.com/nolimits4web/Swiper/issues/5562)) ([5d4ffdc](https://github.com/nolimits4web/Swiper/commit/5d4ffdc4fa7d7a40b3c7cf620a5a8411138c5951))
+- **effect-cards:** add `rotate` parameter ([5f4ca8a](https://github.com/nolimits4web/Swiper/commit/5f4ca8a4e63b2487d49084e171012a8a6485bba5)), closes [#5575](https://github.com/nolimits4web/Swiper/issues/5575)
+
+# [8.0.7](https://github.com/nolimits4web/Swiper/compare/v8.0.6...v8.0.7) (2022-03-04)
+
+### Bug Fixes
+
+- **pagination:** use direction classes ([95c882c](https://github.com/nolimits4web/Swiper/commit/95c882c50a798ebe7adc20fcb61765aace0edbfc)), closes [#5489](https://github.com/nolimits4web/Swiper/issues/5489)
+
+### Features
+
+- **effect-cards:** support for use with Virtual Slides ([69a8870](https://github.com/nolimits4web/Swiper/commit/69a887094514555800fe588cf5643a76cd5c7a0e))
+- **virtual:** better support for other effects rather than `slide` ([2dae84f](https://github.com/nolimits4web/Swiper/commit/2dae84fa4d65c4a9d319a6fe086877ab7a2724c5))
+
+# [8.0.6](https://github.com/nolimits4web/Swiper/compare/v8.0.5...v8.0.6) (2022-02-14)
+
+### Bug Fixes
+
+- **angular:** swiper angular event ([#5462](https://github.com/nolimits4web/Swiper/issues/5462)) ([adc99a5](https://github.com/nolimits4web/Swiper/commit/adc99a5c114abbe3a84fd1f235dd6230fddf8dc9))
+- **vue:** HMR error ([#5460](https://github.com/nolimits4web/Swiper/issues/5460)) ([0374228](https://github.com/nolimits4web/Swiper/commit/0374228c2761201cf9895d30b34ea869cbc773ea))
+
+# [8.0.5](https://github.com/nolimits4web/Swiper/compare/v8.0.4...v8.0.5) (2022-02-10)
+
+### Bug Fixes
+
+- **core:** fix short swipes ([8e1c12e](https://github.com/nolimits4web/Swiper/commit/8e1c12e036e39034e6c627cf54105f9259862de5))
+
+# [8.0.4](https://github.com/nolimits4web/Swiper/compare/v8.0.3...v8.0.4) (2022-02-10)
+
+### Bug Fixes
+
+- **core:** wrap resize observer callback in requestAnimationFrame ([#5441](https://github.com/nolimits4web/Swiper/issues/5441)) ([0567641](https://github.com/nolimits4web/Swiper/commit/0567641fbe4bdbea54b5de0bcc2c937dfb52e088)), closes [#5440](https://github.com/nolimits4web/Swiper/issues/5440)
+
+### Features
+
+- **angular:** events types ([#5424](https://github.com/nolimits4web/Swiper/issues/5424)) ([d8631d8](https://github.com/nolimits4web/Swiper/commit/d8631d831333e3879bb42a3e91ccb23dde94b14d))
+- **angular:** lock output ([#5442](https://github.com/nolimits4web/Swiper/issues/5442)) ([3bc27a4](https://github.com/nolimits4web/Swiper/commit/3bc27a4f191e54a579c39dfdf70c39e05ce56342))
+- **core:** allow nesting of styles in SASS ([#5438](https://github.com/nolimits4web/Swiper/issues/5438)) ([c973bc8](https://github.com/nolimits4web/Swiper/commit/c973bc83f9a117e0ee5585d5495a7492d646ac6b))
+- **core:** rewind on swipes ([#5422](https://github.com/nolimits4web/Swiper/issues/5422)) ([1a2f83b](https://github.com/nolimits4web/Swiper/commit/1a2f83b1e0ec1330d9a004c81451f7db71a9186f))
+
+# [8.0.3](https://github.com/nolimits4web/Swiper/compare/v8.0.2...v8.0.3) (2022-02-03)
+
+### Bug Fixes
+
+- **react:** `useSwiper` context value ([#5421](https://github.com/nolimits4web/Swiper/issues/5421)) ([60cbe75](https://github.com/nolimits4web/Swiper/commit/60cbe754046a133d8e443a707460547bf05693cc))
+- **react:** add autoplay to watched modules ([#5419](https://github.com/nolimits4web/Swiper/issues/5419)) ([16059ad](https://github.com/nolimits4web/Swiper/commit/16059adf98f46c7f62f24d78aa68b62a1d34815d))
+- **svelte:** add autoplay to watched modules ([1463e05](https://github.com/nolimits4web/Swiper/commit/1463e0588b42f255c76dce04f5fff251e9260283))
+- **vue:** add autoplay to watched modules ([da4d3cc](https://github.com/nolimits4web/Swiper/commit/da4d3ccdfd7d619da030fbc82af3329d94b264e8))
+
+# [8.0.2](https://github.com/nolimits4web/Swiper/compare/v8.0.1...v8.0.2) (2022-02-02)
+
+### Bug Fixes
+
+- **core:** fix slider freeze with enabled observer ([8ff2691](https://github.com/nolimits4web/Swiper/commit/8ff2691ae8cfa63d97040c1ff0db3cc648f8e941)), closes [#5414](https://github.com/nolimits4web/Swiper/issues/5414)
+
+# [8.0.1](https://github.com/nolimits4web/Swiper/compare/v8.0.0...v8.0.1) (2022-02-01)
+
+### Bug Fixes
+
+- **angular:** fix angular export ([8785e2b](https://github.com/nolimits4web/Swiper/commit/8785e2b5742a84cf169dc1936e58d48b5158ae0f)), closes [#5414](https://github.com/nolimits4web/Swiper/issues/5414)
+- **react:** types for useSwiper and useSwiperSlide hooks ([2cbf82c](https://github.com/nolimits4web/Swiper/commit/2cbf82c51e9b2fd22ccf464eea502b7f19705df1)), closes [#5413](https://github.com/nolimits4web/Swiper/issues/5413)
+
+### Features
+
+- **angular:** remove deprecated `index` property ([#5412](https://github.com/nolimits4web/Swiper/issues/5412)) ([63642a1](https://github.com/nolimits4web/Swiper/commit/63642a18eb1ecffc28e7ecc6128b56e965aa9e46))
+
+# [8.0.0](https://github.com/nolimits4web/Swiper/compare/v7.4.1...v8.0.0) (2022-02-01)
+
+### Bug Fixes
+
+- **a11y:** update `aria-disabled` on lock/unlock ([8183466](https://github.com/nolimits4web/Swiper/commit/81834664102cfead3b3882112d6b5f32c5e22b0c)), closes [#5383](https://github.com/nolimits4web/Swiper/issues/5383)
+- **angular:** `[@output](https://github.com/output)` events emitting ([#5225](https://github.com/nolimits4web/Swiper/issues/5225)) ([a34eb7a](https://github.com/nolimits4web/Swiper/commit/a34eb7addb05c29673fc34dc95d745830d3c99e6))
+- **angular:** get params types ([#5390](https://github.com/nolimits4web/Swiper/issues/5390)) ([8731204](https://github.com/nolimits4web/Swiper/commit/87312043303ed3b3656f2b4f70f22830a85a44fb))
+- **angular:** toggle input ([#5229](https://github.com/nolimits4web/Swiper/issues/5229)) ([#5254](https://github.com/nolimits4web/Swiper/issues/5254)) ([03acbe2](https://github.com/nolimits4web/Swiper/commit/03acbe2569a5c2359f37031b3a6289bc9fe4ebb2))
+- **core:** don't prevent focusable elements click when `allowTouchMove: false` ([f0eac04](https://github.com/nolimits4web/Swiper/commit/f0eac047081b887eca47f1e9a2fa7ff352adac5b)), closes [#5358](https://github.com/nolimits4web/Swiper/issues/5358)
+- **core:** don't swipe over `<select>` element ([faeb14a](https://github.com/nolimits4web/Swiper/commit/faeb14abe72988a6b1bc86d1daa7df5f3a7a904f)), closes [#5268](https://github.com/nolimits4web/Swiper/issues/5268)
+- **lazy:** only activate preloader-spin animation when slide is active ([#5203](https://github.com/nolimits4web/Swiper/issues/5203)) ([b7d89ea](https://github.com/nolimits4web/Swiper/commit/b7d89ea39aa14532346e615aae0080f4b7a70ce6)), closes [#5202](https://github.com/nolimits4web/Swiper/issues/5202)
+- **react:** compatibility with React 18 strict mode ([68bcec8](https://github.com/nolimits4web/Swiper/commit/68bcec868c596d9a47fe029a2eff90dcaa921ae5)), closes [#5398](https://github.com/nolimits4web/Swiper/issues/5398)
+- **react:** update `controller.control` on `control` prop array change ([7c53de8](https://github.com/nolimits4web/Swiper/commit/7c53de8ffae91a661370c7e618ba468e7fdc64e1)), closes [#5368](https://github.com/nolimits4web/Swiper/issues/5368)
+- **svelte:** `swiperSlide` slot data with context ([89f14ab](https://github.com/nolimits4web/Swiper/commit/89f14ab5c07d0d8ab8fa7b0a40d4fb29dcdc99de))
+- **types:** bullets type should be `Dom7Array` ([#5405](https://github.com/nolimits4web/Swiper/issues/5405)) ([d248a14](https://github.com/nolimits4web/Swiper/commit/d248a14bc867015164fa0d85a96405de211751e7))
+
+### Features
+
+- **a11y:** automatically switch slides on focus (`Tab`) in inactive slides ([1288271](https://github.com/nolimits4web/Swiper/commit/128827156b0f125a5f6ecf1409add4146fa3c989)), closes [#3149](https://github.com/nolimits4web/Swiper/issues/3149)
+- **angular:** update to angular 13 and enable tsconfig `strict` ([#5231](https://github.com/nolimits4web/Swiper/issues/5231)) ([23ee4b3](https://github.com/nolimits4web/Swiper/commit/23ee4b34f21e5c52d032cdb8812229839fc72da0))
+- **autoplay:** `autoplayPause` and `autoplayResume` events ([aea56ed](https://github.com/nolimits4web/Swiper/commit/aea56ed2712c18ff215fd53bf86b4150b4a00470))
+- **free-mode:** stop scrolling when touch event happens in freeMode ([80958d5](https://github.com/nolimits4web/Swiper/commit/80958d5e946e40d697bd0eb6fcfeed5f45579ba3)), closes [#4616](https://github.com/nolimits4web/Swiper/issues/4616)
+- **react:** `useSwiper` and `useSwiperSlide` context hooks ([#5364](https://github.com/nolimits4web/Swiper/issues/5364)) ([18bb89b](https://github.com/nolimits4web/Swiper/commit/18bb89b5d69252a4c8b65246fa17edf9e27e172f))
+- **svelte:** `swiper` and `swiperSlide` context ([#5391](https://github.com/nolimits4web/Swiper/issues/5391)) ([b5c2d3b](https://github.com/nolimits4web/Swiper/commit/b5c2d3b2ae39dd19a111f819d568ef134fc71a6f))
+- **svelte:** import index ([c91f222](https://github.com/nolimits4web/Swiper/commit/c91f2229412062a24cfff5485769a3262b596732)), closes [#4976](https://github.com/nolimits4web/Swiper/issues/4976) [#4975](https://github.com/nolimits4web/Swiper/issues/4975)
+- **virtual:** support `rewind` functionality with Virtual slides ([e52de28](https://github.com/nolimits4web/Swiper/commit/e52de28fcd9e3b9cc29091b6fd89df842736b64e))
+- **vue:** `useSwiper` and `useSwiperSlide` context hooks ([987a32e](https://github.com/nolimits4web/Swiper/commit/987a32e807b2e9aaa40fb19bfd3022b1e80246c0))
+- new `maxBackfaceHiddenSlides` param to prevent flicker in Safari ([d679a98](https://github.com/nolimits4web/Swiper/commit/d679a98ec1b24be9f6ca057e02911e2e7ee91924))
+- new `maxBackfaceHiddenSlides` param to prevent flicker in Safari ([8c05e6d](https://github.com/nolimits4web/Swiper/commit/8c05e6d6ebcf1a8bc5ca9c27e274f22d6c339b92))
+- **svelte:** types for Swiper slot `virtualData` ([682f56f](https://github.com/nolimits4web/Swiper/commit/682f56f264584aae25273b500697238a4341b254))
+- **svelte:** types for SwiperSlide slot data ([1fa70e1](https://github.com/nolimits4web/Swiper/commit/1fa70e129c460d5adacc2964bcfdd80f864e0078)), closes [#5349](https://github.com/nolimits4web/Swiper/issues/5349)
+- **vue:** provide - inject `swiper` and `swiperSlide` context ([#5377](https://github.com/nolimits4web/Swiper/issues/5377)) ([f3145b1](https://github.com/nolimits4web/Swiper/commit/f3145b1232f6687c8f56b0131d8f1e2be6133e88))
+- update dom7 to latest ([a6b1a47](https://github.com/nolimits4web/Swiper/commit/a6b1a47041b63d4e5425d4651696ef5866ed8d94))
+
 # [7.4.1](https://github.com/nolimits4web/Swiper/compare/v7.4.0...v7.4.1) (2021-12-24)
 
 ### Bug Fixes

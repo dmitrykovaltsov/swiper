@@ -16,6 +16,7 @@ export default function A11y({ swiper, extendParams, on }) {
       containerRoleDescriptionMessage: null,
       itemRoleDescriptionMessage: null,
       slideRole: 'group',
+      id: null,
     },
   });
 
@@ -161,7 +162,51 @@ export default function A11y({ swiper, extendParams, on }) {
     addElControls($el, wrapperId);
   };
 
-  function init() {
+  const handleFocus = (e) => {
+    const slideEl = e.target.closest(`.${swiper.params.slideClass}`);
+    if (!slideEl || !swiper.slides.includes(slideEl)) return;
+    const isActive = swiper.slides.indexOf(slideEl) === swiper.activeIndex;
+    const isVisible =
+      swiper.params.watchSlidesProgress &&
+      swiper.visibleSlides &&
+      swiper.visibleSlides.includes(slideEl);
+    if (isActive || isVisible) return;
+    if (swiper.isHorizontal()) {
+      swiper.el.scrollLeft = 0;
+    } else {
+      swiper.el.scrollTop = 0;
+    }
+    swiper.slideTo(swiper.slides.indexOf(slideEl), 0);
+  };
+
+  const initSlides = () => {
+    const params = swiper.params.a11y;
+    if (params.itemRoleDescriptionMessage) {
+      addElRoleDescription($(swiper.slides), params.itemRoleDescriptionMessage);
+    }
+    if (params.slideRole) {
+      addElRole($(swiper.slides), params.slideRole);
+    }
+
+    const slidesLength = swiper.params.loop
+      ? swiper.slides.filter((el) => !el.classList.contains(swiper.params.slideDuplicateClass))
+          .length
+      : swiper.slides.length;
+    if (params.slideLabelMessage) {
+      swiper.slides.each((slideEl, index) => {
+        const $slideEl = $(slideEl);
+        const slideIndex = swiper.params.loop
+          ? parseInt($slideEl.attr('data-swiper-slide-index'), 10)
+          : index;
+        const ariaLabelMessage = params.slideLabelMessage
+          .replace(/\{\{index\}\}/, slideIndex + 1)
+          .replace(/\{\{slidesLength\}\}/, slidesLength);
+        addElLabel($slideEl, ariaLabelMessage);
+      });
+    }
+  };
+
+  const init = () => {
     const params = swiper.params.a11y;
 
     swiper.$el.append(liveRegion);
@@ -177,31 +222,13 @@ export default function A11y({ swiper, extendParams, on }) {
 
     // Wrapper
     const $wrapperEl = swiper.$wrapperEl;
-    const wrapperId = $wrapperEl.attr('id') || `swiper-wrapper-${getRandomNumber(16)}`;
+    const wrapperId = params.id || $wrapperEl.attr('id') || `swiper-wrapper-${getRandomNumber(16)}`;
     const live = swiper.params.autoplay && swiper.params.autoplay.enabled ? 'off' : 'polite';
     addElId($wrapperEl, wrapperId);
     addElLive($wrapperEl, live);
 
     // Slide
-    if (params.itemRoleDescriptionMessage) {
-      addElRoleDescription($(swiper.slides), params.itemRoleDescriptionMessage);
-    }
-    addElRole($(swiper.slides), params.slideRole);
-
-    const slidesLength = swiper.params.loop
-      ? swiper.slides.filter((el) => !el.classList.contains(swiper.params.slideDuplicateClass))
-          .length
-      : swiper.slides.length;
-    swiper.slides.each((slideEl, index) => {
-      const $slideEl = $(slideEl);
-      const slideIndex = swiper.params.loop
-        ? parseInt($slideEl.attr('data-swiper-slide-index'), 10)
-        : index;
-      const ariaLabelMessage = params.slideLabelMessage
-        .replace(/\{\{index\}\}/, slideIndex + 1)
-        .replace(/\{\{slidesLength\}\}/, slidesLength);
-      addElLabel($slideEl, ariaLabelMessage);
-    });
+    initSlides();
 
     // Navigation
     let $nextEl;
@@ -228,7 +255,10 @@ export default function A11y({ swiper, extendParams, on }) {
         onEnterOrSpaceKey,
       );
     }
-  }
+
+    // Tab focus
+    swiper.$el.on('focus', handleFocus, true);
+  };
   function destroy() {
     if (liveRegion && liveRegion.length > 0) liveRegion.remove();
 
@@ -255,6 +285,9 @@ export default function A11y({ swiper, extendParams, on }) {
         onEnterOrSpaceKey,
       );
     }
+
+    // Tab focus
+    swiper.$el.off('focus', handleFocus, true);
   }
 
   on('beforeInit', () => {
@@ -266,13 +299,12 @@ export default function A11y({ swiper, extendParams, on }) {
   on('afterInit', () => {
     if (!swiper.params.a11y.enabled) return;
     init();
-    updateNavigation();
   });
-  on('toEdge', () => {
+  on('slidesLengthChange snapGridLengthChange slidesGridLengthChange', () => {
     if (!swiper.params.a11y.enabled) return;
-    updateNavigation();
+    initSlides();
   });
-  on('fromEdge', () => {
+  on('fromEdge toEdge afterInit lock unlock', () => {
     if (!swiper.params.a11y.enabled) return;
     updateNavigation();
   });

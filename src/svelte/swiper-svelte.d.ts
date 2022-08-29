@@ -30,7 +30,15 @@ declare class Swiper extends SvelteComponentTyped<
     // MODULES_EVENTS
   },
   {
-    default: {};
+    default: {
+      virtualData: {
+        slides: any[];
+        offset: number;
+        from: number;
+        to: number;
+        slidesGrid: number[];
+      };
+    };
     'container-start': {};
     'wrapper-start': {};
     'wrapper-end': {};
@@ -42,7 +50,15 @@ declare class SwiperSlide extends SvelteComponentTyped<
   SwiperSlideProps,
   {},
   {
-    default: {};
+    default: {
+      data: {
+        isActive: boolean;
+        isVisible: boolean;
+        isDuplicate: boolean;
+        isPrev: boolean;
+        isNext: boolean;
+      };
+    };
   }
 > {}
 

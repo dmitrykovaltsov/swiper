@@ -104,6 +104,7 @@ export default {
   loop: false,
   loopAdditionalSlides: 0,
   loopedSlides: null,
+  loopedSlidesLimit: true,
   loopFillGroupWithBlank: false,
   loopPreventsSlide: true,
 
@@ -120,6 +121,8 @@ export default {
 
   // Passive Listeners
   passiveListeners: true,
+
+  maxBackfaceHiddenSlides: 10,
 
   // NS
   containerModifierClass: 'swiper-', // NEW

@@ -22,6 +22,7 @@ import Swiper from 'swiper';
 import { Observable, of, Subject } from 'rxjs';
 import { getParams } from './utils/get-params';
 import { SwiperSlideDirective } from './swiper-slide.directive';
+import { EventsParams } from './swiper-events';
 import {
   extend,
   isObject,
@@ -29,6 +30,7 @@ import {
   ignoreNgOnChanges,
   coerceBooleanProperty,
   isShowEl,
+  isEnabled,
 } from './utils/utils';
 import {
   SwiperOptions,
@@ -79,6 +81,7 @@ export class SwiperComponent implements OnInit {
   @Input() breakpoints: SwiperOptions['breakpoints'];
   @Input() spaceBetween: SwiperOptions['spaceBetween'];
   @Input() slidesPerView: SwiperOptions['slidesPerView'];
+  @Input() maxBackfaceHiddenSlides: SwiperOptions['maxBackfaceHiddenSlides'];
   @Input() grid: SwiperOptions['grid'];
   @Input() slidesPerGroup: SwiperOptions['slidesPerGroup'];
   @Input() slidesPerGroupSkip: SwiperOptions['slidesPerGroupSkip'];
@@ -117,6 +120,7 @@ export class SwiperComponent implements OnInit {
   @Input() loop: SwiperOptions['loop'];
   @Input() loopAdditionalSlides: SwiperOptions['loopAdditionalSlides'];
   @Input() loopedSlides: SwiperOptions['loopedSlides'];
+  @Input() loopedSlidesLimit: SwiperOptions['loopedSlidesLimit'];
   @Input() loopFillGroupWithBlank: SwiperOptions['loopFillGroupWithBlank'];
   @Input() loopPreventsSlide: SwiperOptions['loopPreventsSlide'];
   @Input() rewind: SwiperOptions['rewind'];
@@ -235,174 +239,230 @@ export class SwiperComponent implements OnInit {
   private _virtual: VirtualOptions | boolean | '';
 
   @Input()
-  set index(index: number) {
-    console.warn('`[(index)]` prop is deprecated and will be removed in upcoming versions');
-    this.setIndex(index);
-  }
-  @Input()
   set config(val: SwiperOptions) {
     this.updateSwiper(val);
     const { params } = getParams(val);
     Object.assign(this, params);
   }
-  // prettier-ignore
-  @Output('_beforeBreakpoint') s__beforeBreakpoint: EventEmitter<SwiperEvents['_beforeBreakpoint']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('_containerClasses') s__containerClasses: EventEmitter<SwiperEvents['_containerClasses']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('_slideClass') s__slideClass: EventEmitter<SwiperEvents['_slideClass']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('_swiper') s__swiper: EventEmitter<SwiperEvents['_swiper']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('activeIndexChange') s_activeIndexChange: EventEmitter<SwiperEvents['activeIndexChange']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('afterInit') s_afterInit: EventEmitter<SwiperEvents['afterInit']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('autoplay') s_autoplay: EventEmitter<SwiperEvents['autoplay']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('autoplayStart') s_autoplayStart: EventEmitter<SwiperEvents['autoplayStart']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('autoplayStop') s_autoplayStop: EventEmitter<SwiperEvents['autoplayStop']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('beforeDestroy') s_beforeDestroy: EventEmitter<SwiperEvents['beforeDestroy']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('beforeInit') s_beforeInit: EventEmitter<SwiperEvents['beforeInit']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('beforeLoopFix') s_beforeLoopFix: EventEmitter<SwiperEvents['beforeLoopFix']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('beforeResize') s_beforeResize: EventEmitter<SwiperEvents['beforeResize']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('beforeSlideChangeStart') s_beforeSlideChangeStart: EventEmitter<SwiperEvents['beforeSlideChangeStart']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('beforeTransitionStart') s_beforeTransitionStart: EventEmitter<SwiperEvents['beforeTransitionStart']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('breakpoint') s_breakpoint: EventEmitter<SwiperEvents['breakpoint']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('changeDirection') s_changeDirection: EventEmitter<SwiperEvents['changeDirection']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('click') s_click: EventEmitter<SwiperEvents['click']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('doubleTap') s_doubleTap: EventEmitter<SwiperEvents['doubleTap']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('doubleClick') s_doubleClick: EventEmitter<SwiperEvents['doubleClick']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('destroy') s_destroy: EventEmitter<SwiperEvents['destroy']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('fromEdge') s_fromEdge: EventEmitter<SwiperEvents['fromEdge']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('hashChange') s_hashChange: EventEmitter<SwiperEvents['hashChange']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('hashSet') s_hashSet: EventEmitter<SwiperEvents['hashSet']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('imagesReady') s_imagesReady: EventEmitter<SwiperEvents['imagesReady']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('init') s_init: EventEmitter<SwiperEvents['init']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('keyPress') s_keyPress: EventEmitter<SwiperEvents['keyPress']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('lazyImageLoad') s_lazyImageLoad: EventEmitter<SwiperEvents['lazyImageLoad']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('lazyImageReady') s_lazyImageReady: EventEmitter<SwiperEvents['lazyImageReady']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('loopFix') s_loopFix: EventEmitter<SwiperEvents['loopFix']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('momentumBounce') s_momentumBounce: EventEmitter<SwiperEvents['momentumBounce']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('navigationHide') s_navigationHide: EventEmitter<SwiperEvents['navigationHide']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('navigationShow') s_navigationShow: EventEmitter<SwiperEvents['navigationShow']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('observerUpdate') s_observerUpdate: EventEmitter<SwiperEvents['observerUpdate']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('orientationchange') s_orientationchange: EventEmitter<SwiperEvents['orientationchange']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('paginationHide') s_paginationHide: EventEmitter<SwiperEvents['paginationHide']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('paginationRender') s_paginationRender: EventEmitter<SwiperEvents['paginationRender']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('paginationShow') s_paginationShow: EventEmitter<SwiperEvents['paginationShow']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('paginationUpdate') s_paginationUpdate: EventEmitter<SwiperEvents['paginationUpdate']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('progress') s_progress: EventEmitter<SwiperEvents['progress']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('reachBeginning') s_reachBeginning: EventEmitter<SwiperEvents['reachBeginning']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('reachEnd') s_reachEnd: EventEmitter<SwiperEvents['reachEnd']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('realIndexChange') s_realIndexChange: EventEmitter<SwiperEvents['realIndexChange']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('resize') s_resize: EventEmitter<SwiperEvents['resize']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('scroll') s_scroll: EventEmitter<SwiperEvents['scroll']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('scrollbarDragEnd') s_scrollbarDragEnd: EventEmitter<SwiperEvents['scrollbarDragEnd']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('scrollbarDragMove') s_scrollbarDragMove: EventEmitter<SwiperEvents['scrollbarDragMove']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('scrollbarDragStart') s_scrollbarDragStart: EventEmitter<SwiperEvents['scrollbarDragStart']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('setTransition') s_setTransition: EventEmitter<SwiperEvents['setTransition']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('setTranslate') s_setTranslate: EventEmitter<SwiperEvents['setTranslate']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('slideChange') s_slideChange: EventEmitter<SwiperEvents['slideChange']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('slideChangeTransitionEnd') s_slideChangeTransitionEnd: EventEmitter<SwiperEvents['slideChangeTransitionEnd']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('slideChangeTransitionStart') s_slideChangeTransitionStart: EventEmitter<SwiperEvents['slideChangeTransitionStart']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('slideNextTransitionEnd') s_slideNextTransitionEnd: EventEmitter<SwiperEvents['slideNextTransitionEnd']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('slideNextTransitionStart') s_slideNextTransitionStart: EventEmitter<SwiperEvents['slideNextTransitionStart']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('slidePrevTransitionEnd') s_slidePrevTransitionEnd: EventEmitter<SwiperEvents['slidePrevTransitionEnd']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('slidePrevTransitionStart') s_slidePrevTransitionStart: EventEmitter<SwiperEvents['slidePrevTransitionStart']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('slideResetTransitionStart') s_slideResetTransitionStart: EventEmitter<SwiperEvents['slideResetTransitionStart']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('slideResetTransitionEnd') s_slideResetTransitionEnd: EventEmitter<SwiperEvents['slideResetTransitionEnd']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('sliderMove') s_sliderMove: EventEmitter<SwiperEvents['sliderMove']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('sliderFirstMove') s_sliderFirstMove: EventEmitter<SwiperEvents['sliderFirstMove']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('slidesLengthChange') s_slidesLengthChange: EventEmitter<SwiperEvents['slidesLengthChange']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('slidesGridLengthChange') s_slidesGridLengthChange: EventEmitter<SwiperEvents['slidesGridLengthChange']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('snapGridLengthChange') s_snapGridLengthChange: EventEmitter<SwiperEvents['snapGridLengthChange']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('snapIndexChange') s_snapIndexChange: EventEmitter<SwiperEvents['snapIndexChange']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('tap') s_tap: EventEmitter<SwiperEvents['tap']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('toEdge') s_toEdge: EventEmitter<SwiperEvents['toEdge']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('touchEnd') s_touchEnd: EventEmitter<SwiperEvents['touchEnd']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('touchMove') s_touchMove: EventEmitter<SwiperEvents['touchMove']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('touchMoveOpposite') s_touchMoveOpposite: EventEmitter<SwiperEvents['touchMoveOpposite']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('touchStart') s_touchStart: EventEmitter<SwiperEvents['touchStart']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('transitionEnd') s_transitionEnd: EventEmitter<SwiperEvents['transitionEnd']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('transitionStart') s_transitionStart: EventEmitter<SwiperEvents['transitionStart']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('update') s_update: EventEmitter<SwiperEvents['update']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('zoomChange') s_zoomChange: EventEmitter<SwiperEvents['zoomChange']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('lock') s_lock: EventEmitter<SwiperEvents['lock']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('unlock') s_unlock: EventEmitter<SwiperEvents['unlock']> = new EventEmitter<any>();
-  // prettier-ignore
-  @Output('swiper') s_swiper: EventEmitter<any> = new EventEmitter<any>();
+  @Output('_beforeBreakpoint') s__beforeBreakpoint = new EventEmitter<
+    EventsParams['_beforeBreakpoint']
+  >();
 
-  @Output() indexChange = new EventEmitter<number>();
+  @Output('_containerClasses') s__containerClasses = new EventEmitter<
+    EventsParams['_containerClasses']
+  >();
+
+  @Output('_slideClass') s__slideClass = new EventEmitter<EventsParams['_slideClass']>();
+
+  @Output('_swiper') s__swiper = new EventEmitter<EventsParams['_swiper']>();
+
+  @Output('activeIndexChange') s_activeIndexChange = new EventEmitter<
+    EventsParams['activeIndexChange']
+  >();
+
+  @Output('afterInit') s_afterInit = new EventEmitter<EventsParams['afterInit']>();
+
+  @Output('autoplay') s_autoplay = new EventEmitter<EventsParams['autoplay']>();
+
+  @Output('autoplayStart') s_autoplayStart = new EventEmitter<EventsParams['autoplayStart']>();
+
+  @Output('autoplayStop') s_autoplayStop = new EventEmitter<EventsParams['autoplayStop']>();
+
+  @Output('autoplayPause') s_autoplayPause = new EventEmitter<EventsParams['autoplayPause']>();
+
+  @Output('autoplayResume') s_autoplayResume = new EventEmitter<EventsParams['autoplayResume']>();
+
+  @Output('beforeDestroy') s_beforeDestroy = new EventEmitter<EventsParams['beforeDestroy']>();
+
+  @Output('beforeInit') s_beforeInit = new EventEmitter<EventsParams['beforeInit']>();
+
+  @Output('beforeLoopFix') s_beforeLoopFix = new EventEmitter<EventsParams['beforeLoopFix']>();
+
+  @Output('beforeResize') s_beforeResize = new EventEmitter<EventsParams['beforeResize']>();
+
+  @Output('beforeSlideChangeStart') s_beforeSlideChangeStart = new EventEmitter<
+    EventsParams['beforeSlideChangeStart']
+  >();
+
+  @Output('beforeTransitionStart') s_beforeTransitionStart = new EventEmitter<
+    EventsParams['beforeTransitionStart']
+  >();
+
+  @Output('breakpoint') s_breakpoint = new EventEmitter<EventsParams['breakpoint']>();
+
+  @Output('changeDirection') s_changeDirection = new EventEmitter<
+    EventsParams['changeDirection']
+  >();
+
+  @Output('click') s_click = new EventEmitter<EventsParams['click']>();
+
+  @Output('doubleTap') s_doubleTap = new EventEmitter<EventsParams['doubleTap']>();
+
+  @Output('doubleClick') s_doubleClick = new EventEmitter<EventsParams['doubleClick']>();
+
+  @Output('destroy') s_destroy = new EventEmitter<EventsParams['destroy']>();
+
+  @Output('fromEdge') s_fromEdge = new EventEmitter<EventsParams['fromEdge']>();
+
+  @Output('hashChange') s_hashChange = new EventEmitter<EventsParams['hashChange']>();
+
+  @Output('hashSet') s_hashSet = new EventEmitter<EventsParams['hashSet']>();
+
+  @Output('imagesReady') s_imagesReady = new EventEmitter<EventsParams['imagesReady']>();
+
+  @Output('init') s_init = new EventEmitter<EventsParams['init']>();
+
+  @Output('keyPress') s_keyPress = new EventEmitter<EventsParams['keyPress']>();
+
+  @Output('lazyImageLoad') s_lazyImageLoad = new EventEmitter<EventsParams['lazyImageLoad']>();
+
+  @Output('lazyImageReady') s_lazyImageReady = new EventEmitter<EventsParams['lazyImageReady']>();
+
+  @Output('loopFix') s_loopFix = new EventEmitter<EventsParams['loopFix']>();
+
+  @Output('momentumBounce') s_momentumBounce = new EventEmitter<EventsParams['momentumBounce']>();
+
+  @Output('navigationHide') s_navigationHide = new EventEmitter<EventsParams['navigationHide']>();
+
+  @Output('navigationShow') s_navigationShow = new EventEmitter<EventsParams['navigationShow']>();
+
+  @Output('navigationPrev') s_navigationPrev = new EventEmitter<EventsParams['navigationPrev']>();
+
+  @Output('navigationNext') s_navigationNext = new EventEmitter<EventsParams['navigationNext']>();
+
+  @Output('observerUpdate') s_observerUpdate = new EventEmitter<EventsParams['observerUpdate']>();
+
+  @Output('orientationchange') s_orientationchange = new EventEmitter<
+    EventsParams['orientationchange']
+  >();
+
+  @Output('paginationHide') s_paginationHide = new EventEmitter<EventsParams['paginationHide']>();
+
+  @Output('paginationRender') s_paginationRender = new EventEmitter<
+    EventsParams['paginationRender']
+  >();
+
+  @Output('paginationShow') s_paginationShow = new EventEmitter<EventsParams['paginationShow']>();
+
+  @Output('paginationUpdate') s_paginationUpdate = new EventEmitter<
+    EventsParams['paginationUpdate']
+  >();
+
+  @Output('progress') s_progress = new EventEmitter<EventsParams['progress']>();
+
+  @Output('reachBeginning') s_reachBeginning = new EventEmitter<EventsParams['reachBeginning']>();
+
+  @Output('reachEnd') s_reachEnd = new EventEmitter<EventsParams['reachEnd']>();
+
+  @Output('realIndexChange') s_realIndexChange = new EventEmitter<
+    EventsParams['realIndexChange']
+  >();
+
+  @Output('resize') s_resize = new EventEmitter<EventsParams['resize']>();
+
+  @Output('scroll') s_scroll = new EventEmitter<EventsParams['scroll']>();
+
+  @Output('scrollbarDragEnd') s_scrollbarDragEnd = new EventEmitter<
+    EventsParams['scrollbarDragEnd']
+  >();
+
+  @Output('scrollbarDragMove') s_scrollbarDragMove = new EventEmitter<
+    EventsParams['scrollbarDragMove']
+  >();
+
+  @Output('scrollbarDragStart') s_scrollbarDragStart = new EventEmitter<
+    EventsParams['scrollbarDragStart']
+  >();
+
+  @Output('setTransition') s_setTransition = new EventEmitter<EventsParams['setTransition']>();
+
+  @Output('setTranslate') s_setTranslate = new EventEmitter<EventsParams['setTranslate']>();
+
+  @Output('slideChange') s_slideChange = new EventEmitter<EventsParams['slideChange']>();
+
+  @Output('slideChangeTransitionEnd') s_slideChangeTransitionEnd = new EventEmitter<
+    EventsParams['slideChangeTransitionEnd']
+  >();
+
+  @Output('slideChangeTransitionStart') s_slideChangeTransitionStart = new EventEmitter<
+    EventsParams['slideChangeTransitionStart']
+  >();
+
+  @Output('slideNextTransitionEnd') s_slideNextTransitionEnd = new EventEmitter<
+    EventsParams['slideNextTransitionEnd']
+  >();
+
+  @Output('slideNextTransitionStart') s_slideNextTransitionStart = new EventEmitter<
+    EventsParams['slideNextTransitionStart']
+  >();
+
+  @Output('slidePrevTransitionEnd') s_slidePrevTransitionEnd = new EventEmitter<
+    EventsParams['slidePrevTransitionEnd']
+  >();
+
+  @Output('slidePrevTransitionStart') s_slidePrevTransitionStart = new EventEmitter<
+    EventsParams['slidePrevTransitionStart']
+  >();
+
+  @Output('slideResetTransitionStart') s_slideResetTransitionStart = new EventEmitter<
+    EventsParams['slideResetTransitionStart']
+  >();
+
+  @Output('slideResetTransitionEnd') s_slideResetTransitionEnd = new EventEmitter<
+    EventsParams['slideResetTransitionEnd']
+  >();
+
+  @Output('sliderMove') s_sliderMove = new EventEmitter<EventsParams['sliderMove']>();
+
+  @Output('sliderFirstMove') s_sliderFirstMove = new EventEmitter<
+    EventsParams['sliderFirstMove']
+  >();
+
+  @Output('slidesLengthChange') s_slidesLengthChange = new EventEmitter<
+    EventsParams['slidesLengthChange']
+  >();
+
+  @Output('slidesGridLengthChange') s_slidesGridLengthChange = new EventEmitter<
+    EventsParams['slidesGridLengthChange']
+  >();
+
+  @Output('snapGridLengthChange') s_snapGridLengthChange = new EventEmitter<
+    EventsParams['snapGridLengthChange']
+  >();
+
+  @Output('snapIndexChange') s_snapIndexChange = new EventEmitter<
+    EventsParams['snapIndexChange']
+  >();
+
+  @Output('tap') s_tap = new EventEmitter<EventsParams['tap']>();
+
+  @Output('toEdge') s_toEdge = new EventEmitter<EventsParams['toEdge']>();
+
+  @Output('touchEnd') s_touchEnd = new EventEmitter<EventsParams['touchEnd']>();
+
+  @Output('touchMove') s_touchMove = new EventEmitter<EventsParams['touchMove']>();
+
+  @Output('touchMoveOpposite') s_touchMoveOpposite = new EventEmitter<
+    EventsParams['touchMoveOpposite']
+  >();
+
+  @Output('touchStart') s_touchStart = new EventEmitter<EventsParams['touchStart']>();
+
+  @Output('transitionEnd') s_transitionEnd = new EventEmitter<EventsParams['transitionEnd']>();
+
+  @Output('transitionStart') s_transitionStart = new EventEmitter<
+    EventsParams['transitionStart']
+  >();
+
+  @Output('update') s_update = new EventEmitter<EventsParams['update']>();
+
+  @Output('zoomChange') s_zoomChange = new EventEmitter<EventsParams['zoomChange']>();
+
+  @Output('swiper') s_swiper = new EventEmitter<any>();
+
+  @Output('lock') s_lock = new EventEmitter<EventsParams['lock']>();
+
+  @Output('unlock') s_unlock = new EventEmitter<EventsParams['unlock']>();
 
   @ViewChild('prevElRef', { static: false })
   set prevElRef(el: ElementRef) {
@@ -528,7 +588,7 @@ export class SwiperComponent implements OnInit {
       swiperParams.onAny = (eventName: keyof SwiperComponent, ...args: any[]) => {
         const emitter = this[('s_' + eventName) as keyof SwiperComponent] as EventEmitter<any>;
         if (emitter) {
-          emitter.emit(...args);
+          emitter.emit([...args]);
         }
       };
       const _slideClasses: SwiperEvents['_slideClasses'] = (_, updated) => {
@@ -566,10 +626,7 @@ export class SwiperComponent implements OnInit {
       if (swiperParams.loop) {
         swiperRef.loopedSlides = this.loopedSlides;
       }
-      const isVirtualEnabled =
-        typeof swiperRef.params.virtual !== 'undefined' &&
-        typeof swiperRef.params.virtual !== 'boolean' &&
-        swiperRef.params.virtual.enabled;
+      const isVirtualEnabled = isEnabled(swiperRef.params.virtual);
       if (swiperRef.virtual && isVirtualEnabled) {
         swiperRef.virtual.slides = this.slides;
         const extendWith = {
@@ -584,17 +641,11 @@ export class SwiperComponent implements OnInit {
 
       if (isPlatformBrowser(this._platformId)) {
         this.swiperRef = swiperRef.init(this.elementRef.nativeElement);
-        const isEnabled =
-          typeof this.swiperRef.params.virtual !== 'undefined' &&
-          typeof this.swiperRef.params.virtual !== 'boolean' &&
-          this.swiperRef.params.virtual.enabled;
-        if (this.swiperRef.virtual && isEnabled) {
+        const isVirtualEnabled = isEnabled(this.swiperRef.params.virtual);
+        if (this.swiperRef.virtual && isVirtualEnabled) {
           this.swiperRef.virtual.update(true);
         }
         this._changeDetectorRef.detectChanges();
-        swiperRef.on('slideChange', () => {
-          this.indexChange.emit(this.swiperRef.realIndex);
-        });
       }
     });
   }
@@ -628,7 +679,7 @@ export class SwiperComponent implements OnInit {
       this.swiperRef.updateSlides();
       this.swiperRef.updateProgress();
       this.swiperRef.updateSlidesClasses();
-      if (this.swiperRef.lazy && this.swiperRef.params.lazy['enabled']) {
+      if (isEnabled(this.swiperRef.params.lazy)) {
         this.swiperRef.lazy.load();
       }
       this.swiperRef.virtual.update(true);
@@ -767,7 +818,7 @@ export class SwiperComponent implements OnInit {
 
   calcLoopedSlides() {
     if (!this.loop) {
-      return;
+      return false;
     }
     let slidesPerViewParams = this.slidesPerView;
     if (this.breakpoints) {
@@ -785,7 +836,7 @@ export class SwiperComponent implements OnInit {
     let loopedSlides = this.loopedSlides || slidesPerViewParams;
     if (!loopedSlides) {
       // ?
-      return;
+      return false;
     }
 
     if (this.loopAdditionalSlides) {
@@ -795,14 +846,14 @@ export class SwiperComponent implements OnInit {
       loopedSlides = this.slides.length;
     }
     this.loopedSlides = loopedSlides;
-    return loopedSlides;
+    return true;
   }
 
   updateParameter(key: string, value: any) {
     if (!(this.swiperRef && !this.swiperRef.destroyed)) {
       return;
     }
-    const _key = key.replace(/^_/, '');
+    const _key = key.replace(/^_/, '') as keyof SwiperOptions;
     const isCurrentParamObj = isObject(this.swiperRef.params[_key]);
 
     if (_key === 'enabled') {
@@ -816,27 +867,8 @@ export class SwiperComponent implements OnInit {
     if (isCurrentParamObj && isObject(value)) {
       extend(this.swiperRef.params[_key], value);
     } else {
-      this.swiperRef.params[_key] = value;
+      (this.swiperRef.params[_key] as any) = value;
     }
-  }
-  /**
-   * @deprecated will be removed in upcoming versions
-   */
-  setIndex(index: number, speed?: number, silent?: boolean): void {
-    if (!this.isSwiperActive) {
-      this.initialSlide = index;
-      return;
-    }
-    if (index === this.swiperRef.activeIndex) {
-      return;
-    }
-    this._ngZone.runOutsideAngular(() => {
-      if (this.loop) {
-        this.swiperRef.slideToLoop(index, speed, !silent);
-      } else {
-        this.swiperRef.slideTo(index, speed, !silent);
-      }
-    });
   }
 
   ngOnDestroy() {

@@ -8,6 +8,9 @@ function closestElement(selector, base = this) {
     if (!el || el === getDocument() || el === getWindow()) return null;
     if (el.assignedSlot) el = el.assignedSlot;
     const found = el.closest(selector);
+    if (!found && !el.getRootNode) {
+      return null;
+    }
     return found || __closestFrom(el.getRootNode().host);
   }
   return __closestFrom(base);
@@ -42,7 +45,13 @@ export default function onTouchStart(event) {
 
   // change target el for shadow root component
   const swipingClassHasValue = !!params.noSwipingClass && params.noSwipingClass !== '';
-  if (swipingClassHasValue && e.target && e.target.shadowRoot && event.path && event.path[0]) {
+  // eslint-disable-next-line
+  const eventPath = event.composedPath
+    ? event.composedPath()
+    : event.path
+    ? event.path[0]
+    : undefined;
+  if (swipingClassHasValue && e.target && e.target.shadowRoot && eventPath) {
     $targetEl = $(event.path[0]);
   }
 
@@ -55,7 +64,7 @@ export default function onTouchStart(event) {
   if (
     params.noSwiping &&
     (isTargetShadow
-      ? closestElement(noSwipingSelector, e.target)
+      ? closestElement(noSwipingSelector, $targetEl[0])
       : $targetEl.closest(noSwipingSelector)[0])
   ) {
     swiper.allowClick = true;
@@ -103,7 +112,12 @@ export default function onTouchStart(event) {
   if (params.threshold > 0) data.allowThresholdMove = false;
   if (e.type !== 'touchstart') {
     let preventDefault = true;
-    if ($targetEl.is(data.focusableElements)) preventDefault = false;
+    if ($targetEl.is(data.focusableElements)) {
+      preventDefault = false;
+      if ($targetEl[0].nodeName === 'SELECT') {
+        data.isTouched = false;
+      }
+    }
     if (
       document.activeElement &&
       $(document.activeElement).is(data.focusableElements) &&
@@ -120,6 +134,15 @@ export default function onTouchStart(event) {
     ) {
       e.preventDefault();
     }
+  }
+  if (
+    swiper.params.freeMode &&
+    swiper.params.freeMode.enabled &&
+    swiper.freeMode &&
+    swiper.animating &&
+    !params.cssMode
+  ) {
+    swiper.freeMode.onTouchStart();
   }
   swiper.emit('touchStart', e);
 }
